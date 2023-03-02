@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  db: 
+    image: postgres
+    environment:
+      - POSTGRES_USER=nimbus
+      - POSTGRES_PASSWORD=nimbus
+      - POSTGRES_DB=nimbus
+    volumes:
+      - nimbus-postgres-data:/var/lib/postgres/data
+    ports:
+      - 5432:5432
+
+  ws:
+    image: amazoncorretto
+    working_dir: /nimbus/nimbus-server
+    volumes:
+      - ./nimbus-server/:/nimbus/nimbus-server
+
+volumes:
+    nimbus-postgres-data:
