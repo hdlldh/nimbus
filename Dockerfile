@@ -1,9 +1,9 @@
-FROM amazoncorretto:latest
+FROM azul/zulu-openjdk-alpine:8
 
-RUN apt-get clean && apt-get update && apt-get -y dist-upgrade
-RUN apt-get -y install redis awscli unzip && apt-get clean
-
-RUN groupadd -r -g 2036 app_user && useradd -m -u 2036 -g 2036 app_user -s /bin/bash
+RUN apk add --no-cache bash curl 
+RUN curl -Ls https://git.io/sbt > /bin/sbt && chmod 0755 /bin/sbt
 
 RUN mkdir -p /var/www/app /logs
-WORKDIR /var/www.app
+WORKDIR /var/www/app
+
+CMD dist/bin/-web -Dconfig.file=dist/conf/application.conf
